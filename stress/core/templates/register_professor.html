@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Регистрация преподавателя</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="username">Логин:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Зарегистрировать</button>
+</form>
+<a href="{% url 'admin_dashboard' %}">Назад</a>
+{% endblock %}

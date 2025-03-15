@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Панель администратора - {{ university.get_name_display }}</h2>
+
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'register_student' %}" style="margin-right: 10px;">Регистрация студента</a>
+    <a href="{% url 'register_professor' %}" style="margin-right: 10px;">Регистрация преподавателя</a>
+    <a href="{% url 'register_subject' %}">Регистрация предмета</a>
+</div>
+
+<h3>Студенты</h3>
+<table>
+    <thead>
+        <tr><th>Логин</th></tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+            <tr><td>{{ student.username }}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Преподаватели</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Логин</th>
+            <th>Назначить предмет</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for professor in professors %}
+            <tr>
+                <td>{{ professor.username }}</td>
+                <td>
+                    {% for subject in subjects %}
+                        {% if not subject.professor %}
+                            <a href="{% url 'assign_professor_to_subject' professor.id subject.id %}">{{ subject.name }}</a><br>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Предметы</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Код</th>
+            <th>Обязательный</th>
+            <th>Преподаватель</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for subject in subjects %}
+            <tr>
+                <td>{{ subject.name }}</td>
+                <td>{{ subject.code }}</td>
+                <td>{{ subject.is_mandatory|yesno:"Да,Нет" }}</td>
+                <td>{{ subject.professor.username|default:"Нет преподавателя" }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'logout' %}">Выйти</a>
+{% endblock %}

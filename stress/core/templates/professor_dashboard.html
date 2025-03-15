@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Панель преподавателя</h2>
+
+<h3>Мои предметы</h3>
+{% for subject in professor_subjects %}
+    <h4>{{ subject.name }} ({{ subject.code }})</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Студент</th>
+                <th>Текущие оценки</th>
+                <th>Выставить оценку</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for enrollment in subject.enrollment_set.all %}
+                <tr>
+                    <td>{{ enrollment.student.username }}</td>
+                    <td>
+                        {% for grade in enrollment.grades.all %}
+                            {{ grade.score }} ({{ grade.date_added|date:"d.m.Y" }})<br>
+                        {% empty %}
+                            Нет оценок
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="enrollment_id" value="{{ enrollment.id }}">
+                            <input type="number" name="score" min="0" max="100" step="0.1" required placeholder="0-100">
+                            <button type="submit">Добавить</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">На этот предмет пока не зачислены студенты</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% empty %}
+    <p>У вас пока нет назначенных предметов</p>
+{% endfor %}
+
+<h3>Доступные предметы для регистрации</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Предмет</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for subject in available_subjects %}
+            <tr>
+                <td>{{ subject.name }} ({{ subject.code }})</td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="subject_id" value="{{ subject.id }}">
+                        <button type="submit">Взять предмет</button>
+                    </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="2">Нет доступных предметов</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'logout' %}">Выйти</a>
+{% endblock %}

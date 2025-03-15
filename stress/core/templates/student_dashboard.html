@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Панель студента</h2>
+
+<div style="margin-bottom: 20px;">
+    <h3>GPA: {{ gpa|floatformat:2 }}</h3>
+    <h3>Статус: {% if status == 'passed' %}Переведен{% else %}Не переведен{% endif %}</h3>
+</div>
+
+<h3>Мои предметы</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Предмет</th>
+            <th>Оценки</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for enrollment in enrollments %}
+            <tr>
+                <td>{{ enrollment.subject.name }} ({{ enrollment.subject.code }})</td>
+                <td>
+                    {% for grade in grades %}
+                        {% if grade.enrollment == enrollment %}
+                            {{ grade.score }} ({{ grade.date_added|date:"d.m.Y" }})<br>
+                        {% endif %}
+                    {% empty %}
+                        Нет оценок
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Доступные предметы для регистрации</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Предмет</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for subject in available_subjects %}
+            <tr>
+                <td>{{ subject.name }} ({{ subject.code }})</td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="subject_id" value="{{ subject.id }}">
+                        <button type="submit">Зарегистрироваться</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'logout' %}">Выйти</a>
+{% endblock %}
