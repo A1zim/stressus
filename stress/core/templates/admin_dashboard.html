@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Панель администратора - {{ university.get_name_display }}</h2>
+<h2>Admin Dashboard - {{ university.get_name_display }}</h2>
 
 <div style="margin-bottom: 20px;">
-    <a href="{% url 'register_student' %}" style="margin-right: 10px;">Регистрация студента</a>
-    <a href="{% url 'register_professor' %}" style="margin-right: 10px;">Регистрация преподавателя</a>
-    <a href="{% url 'register_subject' %}">Регистрация предмета</a>
+    <a href="{% url 'register_student' %}" style="margin-right: 10px;">Register Student</a>
+    <a href="{% url 'register_professor' %}" style="margin-right: 10px;">Register Professor</a>
+    <a href="{% url 'register_subject' %}">Register Subject</a>
 </div>
 
-<h3>Студенты</h3>
+<h3>Students</h3>
 <table>
     <thead>
-        <tr><th>Логин</th></tr>
+        <tr><th>Username</th></tr>
     </thead>
     <tbody>
         {% for student in students %}
@@ -21,12 +21,13 @@
     </tbody>
 </table>
 
-<h3>Преподаватели</h3>
+<h3>Professors</h3>
 <table>
     <thead>
         <tr>
-            <th>Логин</th>
-            <th>Назначить предмет</th>
+            <th>Username</th>
+            <th>Subjects</th>
+            <th>Assign Subject</th>
         </tr>
     </thead>
     <tbody>
@@ -35,8 +36,16 @@
                 <td>{{ professor.username }}</td>
                 <td>
                     {% for subject in subjects %}
+                        {% if subject.professor == professor %}
+                            <a href="{% url 'remove_professor_from_subject' subject.id %}"
+                               style="color: red; text-decoration: underline;">{{ subject.name }} ({{ subject.code }})</a><br>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for subject in subjects %}
                         {% if not subject.professor %}
-                            <a href="{% url 'assign_professor_to_subject' professor.id subject.id %}">{{ subject.name }}</a><br>
+                            <a href="{% url 'assign_professor_to_subject' professor.id subject.id %}">{{ subject.name }} ({{ subject.code }})</a><br>
                         {% endif %}
                     {% endfor %}
                 </td>
@@ -45,14 +54,14 @@
     </tbody>
 </table>
 
-<h3>Предметы</h3>
+<h3>Subjects</h3>
 <table>
     <thead>
         <tr>
-            <th>Название</th>
-            <th>Код</th>
-            <th>Обязательный</th>
-            <th>Преподаватель</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Mandatory</th>
+            <th>Professor</th>
         </tr>
     </thead>
     <tbody>
@@ -60,11 +69,51 @@
             <tr>
                 <td>{{ subject.name }}</td>
                 <td>{{ subject.code }}</td>
-                <td>{{ subject.is_mandatory|yesno:"Да,Нет" }}</td>
-                <td>{{ subject.professor.username|default:"Нет преподавателя" }}</td>
+                <td>{{ subject.is_mandatory|yesno:"Yes,No" }}</td>
+                <td>{{ subject.professor.username|default:"No professor" }}</td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
-<a href="{% url 'logout' %}">Выйти</a>
+
+<h3>Application Requests</h3>
+{% if pending_applications.exists %}
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Message</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for notif in pending_applications %}
+                <tr>
+                    <td>{{ notif.sender.username }}</td>
+                    <td>{{ notif.message }}</td>
+                    <td>
+                        <form method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="notification_id" value="{{ notif.id }}">
+                            <input type="hidden" name="action" value="confirm">
+                            <button type="submit" style="background-color: #4CAF50;">Confirm</button>
+                        </form>
+                        <form method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="notification_id" value="{{ notif.id }}">
+                            <input type="hidden" name="action" value="cancel">
+                            <textarea name="reason" placeholder="Reason for denial" required style="width: 150px; height: 40px;"></textarea>
+                            <button type="submit" style="background-color: #f44336;">Cancel</button>
+                        </form>
+                        <a href="{% url 'application_details' notif.id %}" style="margin-left: 10px;">Details</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No pending applications</p>
+{% endif %}
+
+<a href="{% url 'logout' %}">Logout</a>
 {% endblock %}

@@ -5,9 +5,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class University(models.Model):
     NAME_CHOICES = (
-        ('university1', 'University 1'),
-        ('university2', 'University 2'),
-        ('university3', 'University 3'),
+        ('university1', 'American University of Central Asia (AUCA)'),
+        ('university2', 'American Institute of Technology (AIT)'),
+        ('university3', 'Politech'),
     )
     name = models.CharField(max_length=20, choices=NAME_CHOICES, unique=True)
 
@@ -62,6 +62,20 @@ class Enrollment(models.Model):
         unique_together = ('student', 'subject', 'semester')
 
 class Grade(models.Model):
-    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
+    enrollment = models.OneToOneField(Enrollment, on_delete=models.CASCADE, related_name='grade')
     score = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-    date_added = models.DateTimeField(auto_now_add=True)
+    date_added = models.DateTimeField(auto_now=True)  # Обновляется при изменении
+
+    def __str__(self):
+        return f"{self.enrollment.student.username} - {self.enrollment.subject.name}: {self.score}"
+
+class Notification(models.Model):
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+    action = models.CharField(max_length=50, blank=True, null=True)  # Например, "grade_set", "application_submitted"
+
+    def __str__(self):
+        return f"{self.recipient.username}: {self.message} ({' unread' if not self.is_read else 'read'})"

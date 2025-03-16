@@ -13,4 +13,8 @@ urlpatterns = [
     path('register-subject/', views.register_subject, name='register_subject'),
     path('assign-professor/<int:professor_id>/<int:subject_id>/',
          views.assign_professor_to_subject, name='assign_professor_to_subject'),
+    path('remove-professor/<int:subject_id>/',
+         views.remove_professor_from_subject, name='remove_professor_from_subject'),
+    path('notifications/', views.notifications_view, name='notifications'),
+path('admin/application-details/<int:notification_id>/', views.application_details, name='application_details'),
 ]

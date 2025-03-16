@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Подтверждение снятия преподавателя</h2>
+
+<p>Предмет: <strong>{{ subject.name }} ({{ subject.code }})</strong></p>
+<p>Текущий преподаватель: <strong>{{ current_professor }}</strong></p>
+<p style="color: red;">
+    Внимание: Этот предмет зарегистрирован на преподавателя {{ current_professor }}.
+    Если вы снимете преподавателя, все оценки студентов по этому предмету будут удалены!
+</p>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="confirm" value="yes">
+    <button type="submit" style="background-color: red;">Подтвердить</button>
+    <a href="{% url 'admin_dashboard' %}" style="margin-left: 10px;">Отмена</a>
+</form>
+
+{% endblock %}

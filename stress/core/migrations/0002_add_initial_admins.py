@@ -11,9 +11,9 @@ def create_initial_data(apps, schema_editor):
         University.objects.get_or_create(name=uni_name)
 
     admin_data = [
-        {'username': 'admin1', 'password': 'adminpass123', 'university': 'university1'},
-        {'username': 'admin2', 'password': 'adminpass123', 'university': 'university2'},
-        {'username': 'admin3', 'password': 'adminpass123', 'university': 'university3'},
+        {'username': 'admin1', 'password': '123', 'university': 'university1'},
+        {'username': 'admin2', 'password': '123', 'university': 'university2'},
+        {'username': 'admin3', 'password': '123', 'university': 'university3'},
     ]
     for admin in admin_data:
         university = University.objects.get(name=admin['university'])
@@ -27,11 +27,11 @@ def create_initial_data(apps, schema_editor):
             )
 
     mandatory_subjects = [
-        {'name': 'Математика', 'code': 'MATH101'},
-        {'name': 'Физика', 'code': 'PHYS101'},
-        {'name': 'Программирование', 'code': 'CS101'},
-        {'name': 'История', 'code': 'HIST101'},
-        {'name': 'Английский', 'code': 'ENG101'},
+        {'name': 'Discrete Math', 'code': 'DM101'},
+        {'name': 'Linear Algebra', 'code': 'LA101'},
+        {'name': 'Program Language', 'code': 'PL101'},
+        {'name': 'Computer Science', 'code': 'CS101'},
+        {'name': 'Probability and Statistics', 'code': 'PAS101'},
     ]
     for uni in University.objects.all():
         for subj in mandatory_subjects:
