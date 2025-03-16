@@ -13,21 +13,26 @@
         }
 
         :root {
-            /* Переменные для тем */
-            --background: linear-gradient(135deg, #e0eafc, #cfdef3); /* День */
-            --text-color: #333; /* День */
-            --header-bg: #2c3e50; /* День */
-            --header-text: white; /* День */
-            --table-header-bg: #ecf0f1; /* День */
-            --table-row-hover: #f9fafb; /* День */
-            --primary-color: #6a0dad; /* Фиолетовый для кнопок */
-            --primary-hover: #4b077a; /* Темнее для hover */
-            --form-bg: white; /* День */
-            --form-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* День */
-            --input-border: #ddd; /* День */
-            --input-icon-color: #666; /* День */
-            --error-bg: #f8d7da; /* День */
-            --error-text: #721c24; /* День */
+            --background: linear-gradient(135deg, #f0f4f8, #d9e2f2); /* Базовый светлый фон */
+            --text-color: #2c3e50; /* Базовый тёмно-синий текст */
+            --header-bg: #2c3e50; /* Базовый хедер */
+            --header-text: #ffffff; /* Белый текст */
+            --table-header-bg: #ecf0f1; /* Базовый заголовок таблицы */
+            --table-row-hover: #e0e8f0; /* Базовый эффект при наведении */
+            --primary-color: #6a0dad; /* Базовый фиолетовый */
+            --primary-hover: #4b077a; /* Темнее при наведении */
+            --form-bg: #ffffff; /* Базовый фон форм */
+            --form-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Базовая тень */
+            --input-border: #d0d0d0; /* Базовая граница */
+            --input-icon-color: #666; /* Базовый цвет иконок */
+            --error-bg: #f8d7da; /* Базовый фон ошибок */
+            --error-text: #721c24; /* Базовый текст ошибок */
+            --logout-color: #3498db; /* Базовый цвет ссылки Logout */
+            --logout-hover: #2980b9; /* Темнее при наведении */
+            --button-text-color: white; /* Базовый цвет текста кнопок */
+            --danger-link-color: #e74c3c; /* Базовый цвет для текстовых ссылок "Remove" */
+            --danger-link-hover: #c0392b; /* Темнее при наведении */
+            --square-color: rgba(255, 255, 255, 0.3); /* Цвет квадратов по умолчанию */
         }
 
         body {
@@ -35,37 +40,160 @@
             color: var(--text-color);
             line-height: 1.6;
             min-height: 100vh;
-            transition: background 0.3s, color 0.3s;
+            transition: all 0.5s ease-in-out;
+            overflow-x: hidden;
+            position: relative; /* Для позиционирования квадратов */
         }
 
+        /* Тема День */
+        body.day {
+            --background: linear-gradient(135deg, #fffde7, #e6f0fa);
+            --text-color: #2c2f3a;
+            --header-bg: linear-gradient(90deg, #ffd54f, #4fc3f7);
+            --header-text: #ffffff;
+            --table-header-bg: #fff9c4;
+            --table-row-hover: #bbdefb;
+            --primary-color: #0288d1;
+            --primary-hover: #01579b;
+            --form-bg: rgba(255, 255, 255, 0.9);
+            --form-shadow: 0 15px 30px rgba(2, 136, 209, 0.3), 0 0 20px rgba(79, 195, 247, 0.2);
+            --input-border: #b3e5fc;
+            --input-icon-color: #0288d1;
+            --error-bg: #ffebee;
+            --error-text: #c0392b;
+            --logout-color: #1e90ff;
+            --logout-hover: #1565c0;
+            --button-text-color: #ffffff;
+            --danger-link-color: #d32f2f;
+            --danger-link-hover: #b71c1c;
+            --square-color: rgba(2, 136, 209, 0.4); /* Голубые квадраты */
+        }
+
+        /* Тема Ночь (ранее Звезда) */
         body.night {
-            --background: linear-gradient(135deg, #1a1a2e, #16213e); /* Ночь */
-            --text-color: #e0e0e0; /* Ночь */
-            --header-bg: #0f172a; /* Ночь */
-            --header-text: #e0e0e0; /* Ночь */
-            --table-header-bg: #2d3748; /* Ночь */
-            --table-row-hover: #4a5568; /* Ночь */
-            --primary-color: #a855f7; /* Фиолетовый для ночи */
-            --primary-hover: #7e22ce; /* Темнее для hover */
-            --form-bg: #1f2937; /* Ночь */
-            --form-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Ночь */
-            --input-border: #444; /* Ночь */
-            --input-icon-color: #aaa; /* Ночь */
-            --error-bg: #7f2a44; /* Ночь */
-            --error-text: #ffcccb; /* Ночь */
+            --background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --text-color: #b3e5fc;
+            --header-bg: linear-gradient(90deg, #6b48ff, #00d2ff);
+            --header-text: #ffffff;
+            --table-header-bg: #3a3f74;
+            --table-row-hover: #4a4e92;
+            --primary-color: #00d2ff;
+            --primary-hover: #0097e6;
+            --form-bg: rgba(15, 12, 41, 0.9);
+            --form-shadow: 0 15px 30px rgba(0, 210, 255, 0.4), 0 0 25px rgba(107, 72, 255, 0.3);
+            --input-border: #5c5e9a;
+            --input-icon-color: #6b48ff;
+            --error-bg: #6b7280;
+            --error-text: #e0f7fa;
+            --logout-color: #ff4081;
+            --logout-hover: #f50057;
+            --button-text-color: #ffffff;
+            --danger-link-color: #ff6b6b;
+            --danger-link-hover: #ff4040;
+            --square-color: rgba(0, 210, 255, 0.4); /* Неоново-голубые квадраты */
+        }
+
+        /* Тема Звезда (ранее Ночь) */
+        body.star {
+            --background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            --text-color: #e0f7fa;
+            --header-bg: linear-gradient(90deg, #1a2980, #26d0ce);
+            --header-text: #ffffff;
+            --table-header-bg: #2a4066;
+            --table-row-hover: #34495e;
+            --primary-color: #6c5ce7;
+            --primary-hover: #4a00e0;
+            --form-bg: rgba(15, 32, 39, 0.9);
+            --form-shadow: 0 15px 30px rgba(108, 92, 231, 0.4), 0 0 25px rgba(38, 208, 206, 0.3);
+            --input-border: #4a6070;
+            --input-icon-color: #26d0ce;
+            --error-bg: #721c24;
+            --error-text: #ffcccc;
+            --logout-color: #ffeb3b;
+            --logout-hover: #f9a825;
+            --button-text-color: #ffffff;
+            --danger-link-color: #ff6b6b;
+            --danger-link-hover: #ff4040;
+            --square-color: rgba(108, 92, 231, 0.4); /* Фиолетовые квадраты */
+        }
+
+        /* Тема Виктория */
+        body.victoria {
+            --background: linear-gradient(135deg, #1e1e2f, #2a2f4a);
+            --text-color: #e0e0e0;
+            --header-bg: #1c1c2e;
+            --header-text: #ffd1dc;
+            --table-header-bg: #2e2e44;
+            --table-row-hover: #3e3e5a;
+            --primary-color: #ff69b4;
+            --primary-hover: #ff1493;
+            --form-bg: #252a44;
+            --form-shadow: 0 10px 20px rgba(255, 105, 180, 0.3), 0 0 10px rgba(255, 105, 180, 0.5);
+            --input-border: #7a7aa3;
+            --input-icon-color: #ff69b4;
+            --error-bg: #5a4e6a;
+            --error-text: #ffd1dc;
+            --logout-color: #00e676;
+            --logout-hover: #00c853;
+            --button-text-color: #ffffff;
+            --danger-link-color: #ff6b6b;
+            --danger-link-hover: #ff4040;
+            --square-color: rgba(255, 105, 180, 0.4); /* Розовые квадраты */
+        }
+
+        /* Стили для плавающих квадратов */
+        .floating-squares-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Чтобы квадраты не мешали взаимодействию */
+            z-index: -1; /* Самый нижний слой */
+        }
+
+        .floating-square {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--square-color);
+            border-radius: 4px;
+            pointer-events: none;
+            animation: floatSquare 10s linear infinite;
+        }
+
+        @keyframes floatSquare {
+            0% {
+                transform: translate(var(--start-x), var(--start-y)) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(var(--end-x), var(--end-y)) scale(1.5);
+                opacity: 0;
+            }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            padding-top: 70px;
+            animation: fadeIn 0.5s ease-in-out;
+            position: relative;
+            z-index: 1; /* Поверх квадратов */
         }
 
         header {
-            background-color: var(--header-bg);
+            background: var(--header-bg);
             color: var(--header-text);
             padding: 15px 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -74,10 +202,12 @@
             top: 0;
             left: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
         }
 
         header h1 {
-            font-size: 24px;
+            font-size: 28px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .header-actions {
@@ -87,12 +217,22 @@
         }
 
         a {
-            color: #3498db;
+            color: var(--logout-color);
             text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
 
         a:hover {
-            text-decoration: underline;
+            color: var(--logout-hover);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
         form {
@@ -104,64 +244,65 @@
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background-color 0.3s, transform 0.1s;
-            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease;
+            background: var(--primary-color);
+            color: var(--button-text-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-1px);
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         table {
             width: 100%;
-            background-color: var(--form-bg);
+            background: var(--form-bg);
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 15px;
             box-shadow: var(--form-shadow);
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
         }
 
         th, td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         form label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: bold;
             color: var(--text-color);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
         form input, form select {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid var(--input-border);
-            border-radius: 5px;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
             font-size: 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            background: var(--form-bg);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text-color);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         form input:focus, form select:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 5px rgba(106, 13, 173, 0.3);
+            box-shadow: 0 0 15px var(--primary-color), inset 0 0 10px rgba(0, 0, 0, 0.1);
+            transform: scale(1.02);
             outline: none;
         }
 
@@ -171,70 +312,74 @@
         }
 
         th {
-            background-color: var(--table-header-bg);
+            background: var(--table-header-bg);
             color: var(--text-color);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
         tr:hover {
-            background-color: var(--table-row-hover);
+            background: var(--table-row-hover);
+            transition: all 0.3s ease;
         }
 
         h2, h3 {
             color: var(--text-color);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        /* Стили для админской панели */
         .dashboard-header {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .dashboard-header h2 {
-            font-size: 28px;
+            font-size: 32px;
             text-align: center;
+            /* Убрана анимация pulse */
         }
 
         .dashboard-actions {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 15px;
+            margin-top: 15px;
         }
 
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
-        /* Стили для страницы логина */
         .login-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 60px); /* Учитываем высоту хедера */
+            min-height: calc(100vh - 60px);
             padding: 20px;
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, transparent 70%);
         }
 
         .login-container {
             background: var(--form-bg);
             padding: 40px;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: var(--form-shadow);
-            max-width: 400px;
+            max-width: 450px;
             width: 100%;
             text-align: center;
-            animation: fadeIn 0.5s ease-in-out;
+            backdrop-filter: blur(5px);
         }
 
         .login-title {
-            font-size: 28px;
-            margin-bottom: 20px;
+            font-size: 32px;
+            margin-bottom: 25px;
             color: var(--text-color);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
         }
 
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         .input-group {
@@ -248,77 +393,270 @@
 
         .input-icon {
             position: absolute;
-            left: 10px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 18px;
+            font-size: 20px;
             color: var(--input-icon-color);
         }
 
         .login-form input {
-            padding-left: 40px;
-            border: 1px solid var(--input-border);
-            border-radius: 5px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            padding-left: 45px;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .login-form input:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 5px rgba(106, 13, 173, 0.3);
+            box-shadow: 0 0 15px var(--primary-color);
         }
 
         .btn-login {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-            padding: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 5px;
-            transition: background 0.3s, transform 0.1s;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            color: var(--button-text-color);
         }
 
         .btn-login:hover {
             background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
-            transform: translateY(-2px);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
         }
 
         .error-message {
             background: var(--error-bg);
             color: var(--error-text);
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-size: 14px;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-size: 15px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            animation: shake 0.5s;
         }
 
-        /* Анимация появления */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .grade-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .grade-input-wrapper input[type="number"] {
+            padding-left: 45px;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            width: 120px;
+            height: 45px;
+            font-size: 16px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .grade-input-wrapper input[type="number"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color), inset 0 0 10px rgba(0, 0, 0, 0.1);
+            transform: scale(1.03);
+            outline: none;
+        }
+
+        .grade-input-wrapper .grade-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--input-icon-color);
+        }
+
+        .grade-input-wrapper input[type="number"]::-webkit-inner-spin-button,
+        .grade-input-wrapper input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .grade-input-wrapper input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .reason-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .reason-input-wrapper textarea {
+            padding: 12px 12px 12px 45px;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            width: 180px;
+            height: 50px;
+            font-size: 16px;
+            resize: none;
+            outline: none;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .reason-input-wrapper textarea:focus {
+            border-color: var(--error-text);
+            box-shadow: 0 0 15px var(--error-text), inset 0 0 10px rgba(0, 0, 0, 0.1);
+            transform: scale(1.03);
+        }
+
+        .reason-input-wrapper .reason-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--error-text);
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            color: var(--button-text-color);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        .btn-danger {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--danger-link-color);
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            box-shadow: none;
+            display: inline-block;
+        }
+
+        .btn-danger:hover {
+            color: var(--danger-link-hover);
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: none;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-wrapper {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            opacity: 0;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+        }
+
+        .checkbox-wrapper label {
+            margin-left: 35px;
+            font-size: 17px;
+            color: var(--text-color);
+            cursor: pointer;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .checkbox-wrapper input[type="checkbox"] + label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--input-border);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked + label::before {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked + label::after {
+            content: '✔';
+            position: absolute;
+            left: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:focus + label::before {
+            box-shadow: 0 0 15px var(--primary-color), inset 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 500px) {
+            .checkbox-group {
+                flex-direction: column;
+                gap: 15px;
             }
         }
 
-        /* Notification styles */
         .notification {
             display: none;
             position: fixed;
             top: 70px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 15px 20px;
-            border-radius: 5px;
+            padding: 15px 25px;
+            border-radius: 10px;
             color: white !important;
             font-weight: bold;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: all 0.3s ease-in-out;
             z-index: 1000;
-            min-width: 200px;
+            min-width: 250px;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            animation: pop 0.5s ease-out forwards;
         }
 
         .notification.show {
@@ -326,73 +664,74 @@
         }
 
         .notification.success {
-            background: #4CAF50 !important;
+            background: linear-gradient(135deg, #2ecc71, #27ae60) !important;
         }
 
         .notification.error {
-            background: #f44336 !important;
+            background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
         }
 
-        /* Bell styles */
         .notification-bell {
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
             color: var(--header-text);
-            transition: transform 0.3s ease, color 0.3s ease;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .notification-bell:hover {
-            transform: scale(1.1);
+            transform: scale(1.2) rotate(15deg);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
         }
 
         .notification-bell.unread {
-            color: red;
+            color: #e74c3c;
+            animation: blink 1s infinite;
         }
 
-        /* Переключатель тем */
         .theme-toggle {
             cursor: pointer;
-            font-size: 28px;
+            font-size: 32px;
             color: var(--header-text);
-            transition: transform 0.3s ease, color 0.3s ease;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .theme-toggle:hover {
-            transform: rotate(20deg);
+            transform: scale(1.2) rotate(20deg);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
         }
 
         .theme-toggle.spin {
             animation: spin 0.5s ease-in-out;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+        .request-details {
+            background: var(--form-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--form-shadow);
+            margin-top: 15px;
         }
 
-        /* Адаптивность */
         @media (max-width: 500px) {
             .login-container {
-                padding: 20px;
-                margin: 20px;
+                padding: 25px;
+                margin: 15px;
             }
 
             .login-title {
-                font-size: 24px;
+                font-size: 28px;
             }
 
             .btn-login {
-                font-size: 14px;
-                padding: 10px;
+                font-size: 16px;
+                padding: 12px;
             }
 
             .dashboard-actions {
                 flex-direction: column;
-                gap: 5px;
+                gap: 10px;
             }
 
             .dashboard-actions a {
@@ -401,26 +740,44 @@
             }
 
             .header-actions {
-                gap: 10px;
+                gap: 15px;
             }
         }
 
-        .container {
-            padding-top: 70px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.9) translateX(-50%); opacity: 0; }
+            100% { transform: scale(1) translateX(-50%); opacity: 1; }
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <!-- Контейнер для плавающих квадратов -->
+    <div class="floating-squares-container"></div>
+
     <header>
         <h1>Stress - Student Management System</h1>
         <div class="header-actions">
-            {% if user.is_authenticated and user.role == 'student' %}
-                <span class="notification-bell {% if has_unread_notifications %}unread{% endif %}"
-                      onclick="window.location.href='{% url 'notifications' %}'">
-                    🔔
-                </span>
+            {% if user.is_authenticated %}
+                {% if user.role == 'student' %}
+                    <span class="notification-bell {% if has_unread_notifications %}unread{% endif %}"
+                          onclick="window.location.href='{% url 'notifications' %}'">
+                        🔔
+                    </span>
+                {% endif %}
+                <span class="theme-toggle" onclick="toggleTheme()">☀️</span>
+                <a href="{% url 'logout' %}">Logout</a>
             {% endif %}
-            <span class="theme-toggle" onclick="toggleTheme()">🌙</span>
         </div>
     </header>
 
@@ -429,54 +786,143 @@
         <div id="notification" class="notification {{ notification_type }}">
             {{ notification }}
         </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const notification = document.getElementById('notification');
-                if (notification) {
-                    notification.style.display = 'block';
-                    setTimeout(() => {
-                        notification.classList.add('show');
-                    }, 10);
-                    setTimeout(() => {
-                        notification.classList.remove('show');
-                        setTimeout(() => {
-                            notification.style.display = 'none';
-                        }, 500);
-                    }, 3000);
-                }
-
-                // Проверка сохранённой темы при загрузке страницы
-                const savedTheme = localStorage.getItem('theme');
-                const themeToggle = document.querySelector('.theme-toggle');
-                if (savedTheme === 'night') {
-                    document.body.classList.add('night');
-                    themeToggle.textContent = '☀️';
-                } else {
-                    document.body.classList.remove('night');
-                    themeToggle.textContent = '🌙';
-                }
-            });
-
-            function toggleTheme() {
-                const body = document.body;
-                const themeToggle = document.querySelector('.theme-toggle');
-                body.classList.toggle('night');
-                themeToggle.classList.remove('spin');
-                void themeToggle.offsetWidth;
-                themeToggle.classList.add('spin');
-                if (body.classList.contains('night')) {
-                    themeToggle.textContent = '☀️';
-                    localStorage.setItem('theme', 'night');
-                } else {
-                    themeToggle.textContent = '🌙';
-                    localStorage.setItem('theme', 'day');
-                }
-            }
-        </script>
         {% endif %}
 
         {% block content %}
         {% endblock %}
     </div>
+
+    <script>
+        // Генерация плавающих квадратов
+        function createFloatingSquare() {
+            const square = document.createElement('div');
+            square.classList.add('floating-square');
+
+            // Рандомные начальные координаты
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight;
+
+            // Рандомные конечные координаты
+            const endX = Math.random() * window.innerWidth;
+            const endY = Math.random() * window.innerHeight;
+
+            // Установка начальных и конечных позиций через CSS-переменные
+            square.style.setProperty('--start-x', `${startX}px`);
+            square.style.setProperty('--start-y', `${startY}px`);
+            square.style.setProperty('--end-x', `${endX}px`);
+            square.style.setProperty('--end-y', `${endY}px`);
+
+            // Рандомная длительность анимации (от 5 до 15 секунд)
+            const duration = Math.random() * 10 + 5;
+            square.style.animationDuration = `${duration}s`;
+
+            // Добавляем квадрат в контейнер
+            document.querySelector('.floating-squares-container').appendChild(square);
+
+            // Удаляем квадрат после завершения анимации
+            square.addEventListener('animationend', () => {
+                square.remove();
+            });
+        }
+
+        // Создаём квадраты каждые 500мс
+        setInterval(createFloatingSquare, 500);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверка сохранённой темы при загрузке страницы
+            const savedTheme = localStorage.getItem('theme') || 'day';
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (savedTheme === 'night') {
+                document.body.classList.add('night');
+                themeToggle.textContent = '☀️';
+            } else if (savedTheme === 'star') {
+                document.body.classList.add('star');
+                themeToggle.textContent = '🌙';
+            } else if (savedTheme === 'victoria') {
+                document.body.classList.add('victoria');
+                themeToggle.textContent = '⭐';
+            } else {
+                document.body.classList.remove('night', 'star', 'victoria');
+                themeToggle.textContent = '☀️';
+            }
+
+            // Показ уведомления
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 500);
+                }, 3000);
+            }
+
+            // Синхронизация темы с сервером
+            if ('{{ user.is_authenticated }}' === 'True') {
+                const sessionTheme = '{{ request.session.theme|default:"day" }}';
+                if (savedTheme !== sessionTheme) {
+                    fetch('/set-theme/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: 'theme=' + savedTheme
+                    });
+                }
+            }
+        });
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+            let currentTheme = body.classList.contains('victoria') ? 'victoria' :
+                             body.classList.contains('star') ? 'star' :
+                             body.classList.contains('night') ? 'night' : 'day';
+            let newTheme = 'day';
+            let newIcon = '☀️';
+
+            if (currentTheme === 'day') {
+                newTheme = 'night';
+                newIcon = '🌙';
+            } else if (currentTheme === 'night') {
+                newTheme = 'star';
+                newIcon = '⭐';
+            } else if (currentTheme === 'star') {
+                newTheme = 'victoria';
+                newIcon = '🌸';
+            } else if (currentTheme === 'victoria') {
+                newTheme = 'day';
+                newIcon = '☀️';
+            }
+
+            body.classList.remove('day', 'night', 'star', 'victoria');
+            if (newTheme !== 'day') {
+                body.classList.add(newTheme);
+            }
+
+            themeToggle.textContent = newIcon;
+            themeToggle.classList.remove('spin');
+            void themeToggle.offsetWidth;
+            themeToggle.classList.add('spin');
+
+            localStorage.setItem('theme', newTheme);
+
+            if ('{{ user.is_authenticated }}' === 'True') {
+                fetch('/set-theme/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: 'theme=' + newTheme
+                });
+            }
+        }
+    </script>
 </body>
 </html>

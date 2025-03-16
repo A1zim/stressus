@@ -1,119 +1,174 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Admin Dashboard - {{ university.get_name_display }}</h2>
+<div class="admin-dashboard">
+    <div class="dashboard-header">
+        <h2>Admin Dashboard</h2>
+        <h3>University: {{ university.name }}</h3>
+    </div>
 
-<div style="margin-bottom: 20px;">
-    <a href="{% url 'register_student' %}" style="margin-right: 10px;">Register Student</a>
-    <a href="{% url 'register_professor' %}" style="margin-right: 10px;">Register Professor</a>
-    <a href="{% url 'register_subject' %}">Register Subject</a>
+    <div class="section">
+        <div class="dashboard-actions">
+            <a href="{% url 'register_student' %}" class="btn btn-primary">Register Student</a>
+            <a href="{% url 'register_professor' %}" class="btn btn-primary">Register Professor</a>
+            <a href="{% url 'register_subject' %}" class="btn btn-primary">Register Subject</a>
+        </div>
+    </div>
+
+    <!-- Секция для предметов -->
+    <div class="section">
+        <h3>Subjects</h3>
+        {% if subjects.exists %}
+            <table class="subjects-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Professor</th>
+                        <th>Is Mandatory</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subject in subjects %}
+                        <tr>
+                            <td>{{ subject.name }}</td>
+                            <td>{{ subject.code }}</td>
+                            <td>{{ subject.professor.username|default:"No professor" }}</td>
+                            <td>{{ subject.is_mandatory|yesno:"Yes,No" }}</td>
+                            <td>
+                                {% if subject.professor %}
+                                    <a href="{% url 'remove_professor_from_subject' subject.id %}" class="btn-danger">Remove Professor</a>
+                                {% else %}
+                                    {% for professor in professors %}
+                                        <a href="{% url 'assign_professor_to_subject' professor.id subject.id %}" class="btn btn-primary">Assign {{ professor.username }}</a>
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No subjects available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Секция для студентов -->
+    <div class="section">
+        <h3>Students</h3>
+        {% if students.exists %}
+            <table class="students-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.username }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No students registered.</p>
+        {% endif %}
+    </div>
+
+    <!-- Секция для профессоров -->
+    <div class="section">
+        <h3>Professors</h3>
+        {% if professors.exists %}
+            <table class="professors-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Subjects</th>
+                        <th>Assign Subject</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for professor in professors %}
+                        <tr>
+                            <td>{{ professor.username }}</td>
+                            <td>
+                                {% for subject in subjects %}
+                                    {% if subject.professor == professor %}
+                                        <a href="{% url 'remove_professor_from_subject' subject.id %}" class="btn-danger">{{ subject.name }} ({{ subject.code }})</a><br>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for subject in subjects %}
+                                    {% if not subject.professor %}
+                                        <a href="{% url 'assign_professor_to_subject' professor.id subject.id %}" class="btn btn-primary">{{ subject.name }} ({{ subject.code }})</a><br>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No professors registered.</p>
+        {% endif %}
+    </div>
+
+    <!-- Секция для заявок -->
+    <div class="section">
+        <h3>Application Requests</h3>
+        {% if pending_applications.exists %}
+            <table class="applications-table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Message</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in pending_applications %}
+                        <tr>
+                            <td>{{ request.student.username }}</td>
+                            <td>Request for enrollment</td>
+                            <td>{{ request.status|default:"Pending" }}</td>
+                            <td>
+                                {% if request.status == "pending" %}
+                                    <form method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                                        <input type="hidden" name="action" value="confirm">
+                                        <button type="submit" class="btn btn-primary" style="background-color: #4CAF50;">Confirm</button>
+                                    </form>
+                                    <form method="post" style="display: inline; margin-left: 10px;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                                        <input type="hidden" name="action" value="deny">
+                                        <div class="reason-input-wrapper">
+                                            <span class="reason-icon">✖</span>
+                                            <textarea name="reason" placeholder="Reason for denial" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" style="background-color: #f44336;">Deny</button>
+                                    </form>
+                                    <a href="{% url 'application_details' request.id %}" class="btn btn-primary" style="margin-left: 10px;">Details</a>
+                                {% elif request.status == "admin_approved" %}
+                                    <p>Awaiting Super Admin Approval</p>
+                                {% elif request.status == "super_approved" %}
+                                    <p>Approved</p>
+                                {% elif request.status == "denied" %}
+                                    <p>Denied (Reason: {{ request.deny_reason|default:"No reason" }})</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No pending applications.</p>
+        {% endif %}
+    </div>
 </div>
-
-<h3>Students</h3>
-<table>
-    <thead>
-        <tr><th>Username</th></tr>
-    </thead>
-    <tbody>
-        {% for student in students %}
-            <tr><td>{{ student.username }}</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<h3>Professors</h3>
-<table>
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Subjects</th>
-            <th>Assign Subject</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for professor in professors %}
-            <tr>
-                <td>{{ professor.username }}</td>
-                <td>
-                    {% for subject in subjects %}
-                        {% if subject.professor == professor %}
-                            <a href="{% url 'remove_professor_from_subject' subject.id %}"
-                               style="color: red; text-decoration: underline;">{{ subject.name }} ({{ subject.code }})</a><br>
-                        {% endif %}
-                    {% endfor %}
-                </td>
-                <td>
-                    {% for subject in subjects %}
-                        {% if not subject.professor %}
-                            <a href="{% url 'assign_professor_to_subject' professor.id subject.id %}">{{ subject.name }} ({{ subject.code }})</a><br>
-                        {% endif %}
-                    {% endfor %}
-                </td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<h3>Subjects</h3>
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Code</th>
-            <th>Mandatory</th>
-            <th>Professor</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for subject in subjects %}
-            <tr>
-                <td>{{ subject.name }}</td>
-                <td>{{ subject.code }}</td>
-                <td>{{ subject.is_mandatory|yesno:"Yes,No" }}</td>
-                <td>{{ subject.professor.username|default:"No professor" }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<h3>Application Requests</h3>
-{% if pending_applications.exists %}
-    <table>
-        <thead>
-            <tr>
-                <th>Student</th>
-                <th>Message</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for notif in pending_applications %}
-                <tr>
-                    <td>{{ notif.sender.username }}</td>
-                    <td>{{ notif.message }}</td>
-                    <td>
-                        <form method="post" style="display: inline;">
-                            {% csrf_token %}
-                            <input type="hidden" name="notification_id" value="{{ notif.id }}">
-                            <input type="hidden" name="action" value="confirm">
-                            <button type="submit" style="background-color: #4CAF50;">Confirm</button>
-                        </form>
-                        <form method="post" style="display: inline;">
-                            {% csrf_token %}
-                            <input type="hidden" name="notification_id" value="{{ notif.id }}">
-                            <input type="hidden" name="action" value="cancel">
-                            <textarea name="reason" placeholder="Reason for denial" required style="width: 150px; height: 40px;"></textarea>
-                            <button type="submit" style="background-color: #f44336;">Cancel</button>
-                        </form>
-                        <a href="{% url 'application_details' notif.id %}" style="margin-left: 10px;">Details</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>No pending applications</p>
-{% endif %}
-
-<a href="{% url 'logout' %}">Logout</a>
 {% endblock %}
